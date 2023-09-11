@@ -380,8 +380,8 @@ div.user-dropdown {
 }
 
 @media (max-width: 576px) {
-  button.pgn__action-row{
-    margin-bottom: 0 !important;
+  .pgn__action-row .btn:not(:last-child) {
+      margin-bottom: 0 !important;
   }
 }
 
