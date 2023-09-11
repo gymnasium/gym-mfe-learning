@@ -379,8 +379,10 @@ div.user-dropdown {
   box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, .2) !important;
 }
 
-@media (max-width: 576px) .pgn__action-row .btn:not(:last-child) {
-  margin-bottom: 0 !important;
+@media (max-width: 576px) {
+  button.pgn__action-row{
+    margin-bottom: 0 !important;
+  }
 }
 
 
