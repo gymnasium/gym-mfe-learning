@@ -379,6 +379,10 @@ div.user-dropdown {
   box-shadow: 0 .0625rem .125rem rgba(0, 0, 0, .2) !important;
 }
 
+.handout-iframe {
+  color: #25a78e !important;
+}
+
 
 // Import component-specific sass files
 @import "courseware/course/celebration/CelebrationModal.scss";
