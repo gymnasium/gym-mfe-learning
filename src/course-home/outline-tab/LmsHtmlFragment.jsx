@@ -3,25 +3,6 @@ import PropTypes from 'prop-types';
 
 import { getConfig } from '@edx/frontend-platform';
 
-window.onload = function() {
-  // Select the iframe
-  var iframe = document.querySelector('iframe');
-
-  // Access the content of the iframe
-  var iframeContent = iframe.contentDocument || iframe.contentWindow.document;
-
-  // Select all the <a> elements inside .small in the iframe's body
-  var links = iframeContent.querySelectorAll('body .small a');
-
-  // Check if the elements exist
-  if (links.length > 0) {
-      // Apply the desired styles
-      links.forEach(function(link) {
-          link.style.color = '#25a78e';
-      });
-  }
-};
-
 
 const LmsHtmlFragment = ({
   className,
