@@ -395,6 +395,13 @@ a.btn-inverse-outline-primary:active {
   color: #454545 !important;
 }
 
+ol.treeview-handoutsnav {
+  li {
+    a {
+      color: #25a78e !important;
+    }
+  }
+}
 
 // Import component-specific sass files
 @import "courseware/course/celebration/CelebrationModal.scss";
