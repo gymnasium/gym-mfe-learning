@@ -395,12 +395,9 @@ a.btn-inverse-outline-primary:active {
   color: #454545 !important;
 }
 
-ol.treeview-handoutsnav {
-  li {
-    a {
-      color: #25a78e !important;
-    }
-  }
+a[href$="demoPDF.pdf"] {
+  color: #25a78e; /* Change 'red' to whatever style you want */
+  /* Add more styles if needed */
 }
 
 // Import component-specific sass files
