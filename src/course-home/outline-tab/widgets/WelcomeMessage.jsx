@@ -6,7 +6,7 @@ import { Alert, Button, TransitionReplace } from '@edx/paragon';
 import truncate from 'truncate-html';
 
 import { useDispatch } from 'react-redux';
-import LmsHtmlFragment from '../LmsHtmlFragment';
+import SanitizeHtmlFragment from '../SanitizeHtmlFragment';
 import messages from '../messages';
 import { useModel } from '../../../generic/model-store';
 import { dismissWelcomeMessage } from '../../data/thunks';
@@ -51,20 +51,18 @@ const WelcomeMessage = ({ courseId, intl }) => {
     >
       <TransitionReplace className="mb-3" enterDuration={400} exitDuration={200}>
         {showShortMessage ? (
-          <LmsHtmlFragment
+          <SanitizeHtmlFragment
             className="inline-link"
             data-testid="short-welcome-message-iframe"
             key="short-html"
-            html={shortWelcomeMessageHtml}
-            title={intl.formatMessage(messages.welcomeMessage)}
+            html={welcomeMessageHtml}
           />
         ) : (
-          <LmsHtmlFragment
+          <SanitizeHtmlFragment
             className="inline-link"
             data-testid="long-welcome-message-iframe"
             key="full-html"
             html={welcomeMessageHtml}
-            title={intl.formatMessage(messages.welcomeMessage)}
           />
         )}
       </TransitionReplace>

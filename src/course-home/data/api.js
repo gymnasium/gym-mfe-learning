@@ -375,6 +375,36 @@ export async function getOutlineTabData(courseId) {
   };
 }
 
+export async function getUpdatesTabData(courseId) {
+  const url = `${getConfig().LMS_BASE_URL}/api/course_home/outline/${courseId}`;
+
+  console.log(`courseId:`, courseId);
+  const requestTime = Date.now();
+  const tabData = await getAuthenticatedHttpClient().get(url);
+  const responseTime = Date.now();
+
+  const {
+    data,
+    headers,
+  } = tabData;
+
+  const accessExpiration = camelCaseObject(data.access_expiration);
+  const courseBlocks = data.course_blocks ? normalizeOutlineBlocks(courseId, data.course_blocks.blocks) : {};
+  const courseTools = camelCaseObject(data.course_tools);
+  const timeOffsetMillis = getTimeOffsetMillis(headers && headers.date, requestTime, responseTime);
+  const verifiedMode = camelCaseObject(data.verified_mode);
+  const courseUpdates = data.welcome_message_html || '';
+
+  return {
+    accessExpiration,
+    courseBlocks,
+    courseTools,
+    timeOffsetMillis, // This should move to a global time correction reference
+    verifiedMode,
+    courseUpdates,
+  };
+}
+
 export async function postCourseDeadlines(courseId, model) {
   const url = new URL(`${getConfig().LMS_BASE_URL}/api/course_experience/v1/reset_course_deadlines`);
   return getAuthenticatedHttpClient().post(url.href, {

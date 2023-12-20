@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 
-import { LearningHeader as Header } from '@edx/frontend-component-header';
 import PageLoading from '../../generic/PageLoading';
 import { unsubscribeFromCourseGoal } from '../data/api';
 
@@ -38,15 +37,14 @@ const GoalUnsubscribe = ({ intl }) => {
 
   return (
     <>
-      <Header showUserDropdown={false} />
-      <main id="main-content" className="container my-5 text-center">
+      <div id="main-content" className="main-content container my-5 text-center">
         {isLoading && (
           <PageLoading srMessage={`${intl.formatMessage(messages.loading)}`} />
         )}
         {!isLoading && (
           <ResultPage error={error} courseTitle={data.courseTitle} />
         )}
-      </main>
+      </div>
     </>
   );
 };

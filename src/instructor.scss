@@ -1,0 +1,11 @@
+.instructor-toolbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  ~ footer {
+    padding-bottom: 10rem !important;
+  }
+}

@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { useAlert } from '../../../../generic/user-messages';
 import { useModel } from '../../../../generic/model-store';
 
-const ScheduledContentAlert = React.lazy(() => import('./ScheduledCotentAlert'));
+const ScheduledContentAlert = React.lazy(() => import('./ScheduledContentAlert'));
 
 const useScheduledContentAlert = (courseId) => {
   const {

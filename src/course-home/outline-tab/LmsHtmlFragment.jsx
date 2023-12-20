@@ -17,7 +17,7 @@ const LmsHtmlFragment = ({
         <link rel="stylesheet" href="/static/${getConfig().LEGACY_THEME_NAME ? `${getConfig().LEGACY_THEME_NAME}/` : ''}css/bootstrap/lms-main.css">
         <link rel="stylesheet" type="text/css" href="${getConfig().BASE_URL}/static/LmsHtmlFragment.css">
       </head>
-      <body class="${className}">${html}</body>
+      <body className="${className}">${html}</body>
       <script>
         const resizer = new ResizeObserver(() => {
           window.parent.postMessage({type: 'lmshtmlfragment.resize'}, '*');

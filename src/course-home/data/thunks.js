@@ -6,6 +6,7 @@ import {
   getDatesTabData,
   getOutlineTabData,
   getProgressTabData,
+  getUpdatesTabData,
   postCourseDeadlines,
   deprecatedPostCourseGoals,
   postWeeklyLearningGoal,
@@ -78,6 +79,10 @@ export function fetchProgressTab(courseId, targetUserId) {
 
 export function fetchOutlineTab(courseId) {
   return fetchTab(courseId, 'outline', getOutlineTabData);
+}
+
+export function fetchUpdatesTab(courseId) {
+  return fetchTab(courseId, 'updates', getUpdatesTabData);
 }
 
 export function fetchLiveTab(courseId) {

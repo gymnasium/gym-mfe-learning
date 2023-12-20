@@ -4,9 +4,9 @@ import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router';
 
-import Footer from '@edx/frontend-component-footer';
+// import Footer from '@edx/frontend-component-footer';
 import { Toast } from '@edx/paragon';
-import { LearningHeader as Header } from '@edx/frontend-component-header';
+// import { GymHeader } from '../gym-frontend-components/gym-header/GymHeader';
 import PageLoading from '../generic/PageLoading';
 import { getAccessDeniedRedirectUrl } from '../shared/access';
 import { useModel } from '../generic/model-store';
@@ -41,11 +41,11 @@ const TabPage = ({ intl, ...props }) => {
   if (courseStatus === 'loading') {
     return (
       <>
-        <Header />
+        {/* <GymHeader secondaryNav="courses" /> */}
         <PageLoading
           srMessage={intl.formatMessage(messages.loading)}
         />
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }
@@ -74,13 +74,14 @@ const TabPage = ({ intl, ...props }) => {
           {toastHeader}
         </Toast>
         {metadataModel === 'courseHomeMeta' && (<LaunchCourseHomeTourButton srOnly />)}
-        <Header
+        {/* <Header
+          secondaryNav="courses"
           courseOrg={org}
           courseNumber={number}
           courseTitle={title}
-        />
+        /> */}
         <LoadedTabPage {...props} />
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }
@@ -88,11 +89,11 @@ const TabPage = ({ intl, ...props }) => {
   // courseStatus 'failed' and any other unexpected course status.
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <p className="text-center py-5 mx-auto" style={{ maxWidth: '30em' }}>
         {intl.formatMessage(messages.failure)}
       </p>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
