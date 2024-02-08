@@ -12,6 +12,9 @@ import ReactDOM from 'react-dom';
 import { Routes, Route } from 'react-router-dom';
 
 import { Helmet } from 'react-helmet';
+
+import GymSettings, { GymFooter, GymHeader } from '@edx/gym-frontend';
+
 import { fetchDiscussionTab, fetchLiveTab } from './course-home/data/thunks';
 import DiscussionTab from './course-home/discussion-tab/DiscussionTab';
 
@@ -38,12 +41,21 @@ import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
 import DecodePageRoute from './decode-page-route';
 import { DECODE_ROUTES, ROUTES } from './constants';
 
+const config = getConfig();
+const timestamp = Date.now();
+const settings = await GymSettings;
+const root = settings.urls.root; // should be same as marketing URL
+const css = `${root}${settings.css.mfe}?${timestamp}`;
+
 subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
-        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+        <link rel="shortcut icon" href={config.FAVICON_URL} type="image/x-icon" />
+        <link rel="stylesheet" href={css} />
       </Helmet>
+      <GymHeader secondaryNav="courses" />
+      <main><div className="container">
       <PathFixesProvider>
         <NoticesProvider>
           <UserMessagesProvider>
@@ -135,6 +147,8 @@ subscribe(APP_READY, () => {
           </UserMessagesProvider>
         </NoticesProvider>
       </PathFixesProvider>
+      </div></main>
+      <GymFooter />
     </AppProvider>,
     document.getElementById('root'),
   );
