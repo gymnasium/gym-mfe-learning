@@ -155,7 +155,20 @@ subscribe(APP_READY, () => {
 });
 
 subscribe(APP_INIT_ERROR, (error) => {
-  ReactDOM.render(<ErrorPage message={error.message} />, document.getElementById('root'));
+  ReactDOM.render(
+    <AppProvider>
+      <Helmet>
+        <link rel="shortcut icon" href={config.FAVICON_URL} type="image/x-icon" />
+        <link rel="stylesheet" href={css} />
+      </Helmet>
+      <GymHeader secondaryNav="courses" />
+      <main><div className="container">
+        <ErrorPage message={error.message} />
+      </div></main>
+      <GymFooter />
+    </AppProvider>,
+    document.getElementById('root')
+  );
 });
 
 initialize({
