@@ -1,11 +1,77 @@
-@import "~@edx/brand/paragon/fonts";
-@import "~@edx/brand/paragon/variables";
-@import "~@edx/paragon/scss/core/core";
-@import "~@edx/brand/paragon/overrides";
+// Select Paragon Core (~@edx/paragon/scss/core/core)
 
-@import "~@edx/frontend-component-footer/dist/footer";
-@import "~@edx/frontend-component-header/dist/index";
+@import "~@edx/paragon/scss/core/functions";
+@import "~@edx/paragon/scss/core/variables";
+@import "~bootstrap/scss/mixins";
+// @import "~bootstrap/scss/root";
+// @import "~bootstrap/scss/reboot";
+// @import "typography";
+// @import "~@edx/paragon/scss/core/grid";
+@import "~react-loading-skeleton/dist/skeleton.css";
+// @import "~bootstrap/scss/transitions";
+// @import "~@edx/paragon/scss/core/utilities";
+// @import "~bootstrap/scss/media";
+// @import "~bootstrap/scss/list-group";
+// @import "~bootstrap/scss/print";
 
+// Select Paragon components (~@edx/paragon/src/index)
+// @import "~@edx/paragon/src/ActionRow";
+// @import "~@edx/paragon/src/Alert";
+// @import "~@edx/paragon/src/Annotation";
+// @import "~@edx/paragon/src/Avatar";
+// @import "~@edx/paragon/src/AvatarButton";
+// @import "~@edx/paragon/src/Badge";
+// @import "~@edx/paragon/src/Breadcrumb";
+// @import "~@edx/paragon/src/Button";
+// @import "~@edx/paragon/src/Card";
+// @import "~@edx/paragon/src/Carousel";
+// @import "~@edx/paragon/src/Collapsible";
+// @import "~@edx/paragon/src/CloseButton";
+// @import "~@edx/paragon/src/Chip";
+// @import "~@edx/paragon/src/ChipCarousel";
+// @import "~@edx/paragon/src/Code";
+// @import "~@edx/paragon/src/Dropdown";
+// @import "~@edx/paragon/src/Fieldset";
+// @import "~@edx/paragon/src/Figure";
+@import "~@edx/paragon/src/Form";
+// @import "~@edx/paragon/src/Hyperlink";
+// @import "~@edx/paragon/src/Icon";
+// @import "~@edx/paragon/src/Image";
+// @import "~@edx/paragon/src/Media";
+// @import "~@edx/paragon/src/Menu";
+// @import "~@edx/paragon/src/Modal";
+// @import "~@edx/paragon/src/Nav";
+// @import "~@edx/paragon/src/Navbar";
+// @import "~@edx/paragon/src/PageBanner";
+// @import "~@edx/paragon/src/Pagination";
+// @import "~@edx/paragon/src/Popover";
+// @import "~@edx/paragon/src/ProgressBar";
+// @import "~@edx/paragon/src/OverflowScroll";
+// @import "~@edx/paragon/src/SearchField";
+// @import "~@edx/paragon/src/Scrollable";
+// @import "~@edx/paragon/src/Sheet";
+// @import "~@edx/paragon/src/Skeleton";
+// @import "~@edx/paragon/src/Spinner";
+// @import "~@edx/paragon/src/Stepper";
+// @import "~@edx/paragon/src/StatefulButton";
+// @import "~@edx/paragon/src/Table";
+// @import "~@edx/paragon/src/Tooltip";
+// @import "~@edx/paragon/src/DataTable";
+// @import "~@edx/paragon/src/TransitionReplace";
+// @import "~@edx/paragon/src/ValidationMessage";
+// @import "~@edx/paragon/src/Tabs/deprecated/Tabs";
+// @import "~@edx/paragon/src/IconButton";
+// @import "~@edx/paragon/src/IconButtonToggle";
+// @import "~@edx/paragon/src/Toast";
+// @import "~@edx/paragon/src/Toast/ToastContainer";
+// @import "~@edx/paragon/src/SelectableBox";
+// @import "~@edx/paragon/src/ProductTour/Checkpoint";
+// @import "~@edx/paragon/src/Sticky";
+// @import "~@edx/paragon/src/Stack";
+// @import "~@edx/paragon/src/Bubble";
+// @import "~@edx/paragon/src/Tabs";
+// @import "~@edx/paragon/src/Dropzone";
+// @import "~@edx/paragon/src/ColorPicker";
 
 #root {
   display: flex;
@@ -14,27 +80,6 @@
 
   main {
     flex-grow: 1;
-  }
-
-  header {
-    flex: 0 0 auto;
-
-    .logo {
-      display: block;
-      box-sizing: content-box;
-      position: relative;
-      top: 0.1em;
-      height: 1.75rem;
-      margin-right: 1rem;
-      img {
-        display: block;
-        height: 100%;
-      }
-    }
-  }
-
-  footer {
-    flex: 0;
   }
 }
 
