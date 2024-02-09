@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { LearningHeader as Header } from '@edx/frontend-component-header';
-import Footer from '@edx/frontend-component-footer';
+// import { LearningHeader as Header } from '@edx/frontend-component-header';
+// import Footer from '@edx/frontend-component-footer';
 import { useParams, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
@@ -28,11 +28,11 @@ const CourseAccessErrorPage = ({ intl }) => {
   if (courseStatus === LOADING) {
     return (
       <>
-        <Header />
+        {/* <Header /> */}
         <PageLoading
           srMessage={intl.formatMessage(messages.loading)}
         />
-        <Footer />
+        {/* <Footer /> */}
       </>
     );
   }
@@ -41,8 +41,8 @@ const CourseAccessErrorPage = ({ intl }) => {
   }
   return (
     <>
-      <Header />
-      <main id="main-content" className="container my-5 text-center" data-testid="access-denied-main">
+      {/* <Header /> */}
+      {/* <main id="main-content" className="container my-5 text-center" data-testid="access-denied-main">
         <AlertList
           topic="outline"
           className="mx-5 mt-3"
@@ -50,8 +50,8 @@ const CourseAccessErrorPage = ({ intl }) => {
             ...activeEnterpriseAlert,
           }}
         />
-      </main>
-      <Footer />
+      </main> */}
+      {/* <Footer /> */}
     </>
   );
 };

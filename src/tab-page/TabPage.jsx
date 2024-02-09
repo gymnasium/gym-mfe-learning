@@ -6,7 +6,7 @@ import { Navigate } from 'react-router-dom';
 
 import Footer from '@edx/frontend-component-footer';
 import { Toast } from '@edx/paragon';
-import { LearningHeader as Header } from '@edx/frontend-component-header';
+// import { LearningHeader as Header } from '@edx/frontend-component-header';
 import PageLoading from '../generic/PageLoading';
 import { getAccessDeniedRedirectUrl } from '../shared/access';
 import { useModel } from '../generic/model-store';
@@ -64,7 +64,7 @@ const TabPage = ({ intl, ...props }) => {
         </>
       )}
 
-      <Header courseOrg={org} courseNumber={number} courseTitle={title} />
+      {/* <Header courseOrg={org} courseNumber={number} courseTitle={title} /> */}
 
       {courseStatus === 'loading' && (
         <PageLoading srMessage={intl.formatMessage(messages.loading)} />
@@ -80,7 +80,7 @@ const TabPage = ({ intl, ...props }) => {
           {intl.formatMessage(messages.failure)}
         </p>
       )}
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };

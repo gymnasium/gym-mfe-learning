@@ -69,20 +69,20 @@ const LoadedTabPage = ({
         streakDiscountCouponEnabled={streakDiscountCouponEnabled}
         verifiedMode={verifiedMode}
       />
-      <main id="main-content" className="d-flex flex-column flex-grow-1">
-        <AlertList
+      {/* <main id="main-content" className="d-flex flex-column flex-grow-1"> */}
+        {/* <AlertList
           topic="outline"
           className="mx-5 mt-3"
           customAlerts={{
             ...enrollmentAlert,
             ...logistrationAlert,
           }}
-        />
+        /> */}
         <CourseTabsNavigation tabs={tabs} className="mb-3" activeTabSlug={activeTabSlug} />
         <div className="container-xl">
           {children}
         </div>
-      </main>
+      {/* </main> */}
     </>
   );
 };
