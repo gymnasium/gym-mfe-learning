@@ -26,7 +26,7 @@ import CoursewareRedirectLandingPage from './courseware/CoursewareRedirectLandin
 import DatesTab from './course-home/dates-tab';
 import GoalUnsubscribe from './course-home/goal-unsubscribe';
 import ProgressTab from './course-home/progress-tab/ProgressTab';
-import { TabContainer } from './tab-page';
+import { TabContainer } from './gym-tab-page';
 
 import { fetchDatesTab, fetchOutlineTab, fetchProgressTab } from './course-home/data';
 import { fetchCourse } from './courseware/data';
@@ -38,11 +38,18 @@ import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
 import DecodePageRoute from './decode-page-route';
 import { DECODE_ROUTES, ROUTES } from './constants';
 
+import { timestamp } from '@edx/gym-frontend';
+
+const getBaseUrl = () => getConfig().MARKETING_SITE_BASE_URL;
+const getFaviconUrl = () => getConfig().FAVICON_URL;
+const getStyles = () => `${getBaseUrl()}/css/mfe.css?${timestamp}`;
+
 subscribe(APP_READY, () => {
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
-        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
+        <link rel="shortcut icon" href={getFaviconUrl()} type="image/x-icon" />
+        <link rel="stylesheet" href={ getStyles() } />
       </Helmet>
       <PathFixesProvider>
         <NoticesProvider>
