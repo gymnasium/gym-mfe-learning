@@ -1,7 +1,7 @@
 {
   "name": "@edx/frontend-app-learning",
-  "version": "1.0.0-semantically-released",
-  "description": "Frontend learning application.",
+  "version": "1.0.0-gym.quince.3",
+  "description": "Gymnasium-specific Learning MFE",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openedx/frontend-app-learning.git"

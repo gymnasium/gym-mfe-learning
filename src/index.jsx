@@ -42,7 +42,7 @@ import { timestamp } from '@edx/gym-frontend';
 
 const getBaseUrl = () => getConfig().MARKETING_SITE_BASE_URL;
 const getFaviconUrl = () => getConfig().FAVICON_URL;
-const getStyles = () => `${getBaseUrl()}/css/mfe.css?${timestamp}`;
+const getStyles = () => `${getBaseUrl()}/css/mfe-learning.css?${timestamp}`;
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
