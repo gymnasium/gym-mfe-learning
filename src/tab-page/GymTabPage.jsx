@@ -17,7 +17,7 @@ import LoadedTabPage from './LoadedTabPage';
 import { setCallToActionToast } from '../course-home/data/slice';
 import LaunchCourseHomeTourButton from '../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton';
 
-import { GymFooter as FooterSlot, GymHeader } from '../../@openedx/gym-frontend';
+import { GymFooter as FooterSlot, GymHeader } from '@openedx/gym-frontend';
 
 const TabPage = ({ intl, ...props }) => {
   const {
