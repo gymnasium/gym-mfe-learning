@@ -18,7 +18,8 @@ import DiscussionTab from './course-home/discussion-tab/DiscussionTab';
 import messages from './i18n';
 import { UserMessagesProvider } from './generic/user-messages';
 
-import './index.scss';
+// import './GymApp.scss';
+
 import OutlineTab from './course-home/outline-tab';
 import { CourseExit } from './courseware/course/course-exit';
 import CoursewareContainer from './courseware';
@@ -34,9 +35,11 @@ import initializeStore from './store';
 import NoticesProvider from './generic/notices';
 import PathFixesProvider from './generic/path-fixes';
 import LiveTab from './course-home/live-tab/LiveTab';
-import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
+import CourseAccessErrorPage from './generic/GymCourseAccessErrorPage';
 import DecodePageRoute from './decode-page-route';
 import { DECODE_ROUTES, ROUTES } from './constants';
+
+import { GymFooter as FooterSlot, GymHeader } from '@openedx/gym-frontend';
 
 subscribe(APP_READY, () => {
   ReactDOM.render(
@@ -44,6 +47,7 @@ subscribe(APP_READY, () => {
       <Helmet>
         <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
       </Helmet>
+      {/* <GymHeader secondaryNav="courses" activeLink="courses" /> */}
       <PathFixesProvider>
         <NoticesProvider>
           <UserMessagesProvider>
@@ -137,6 +141,7 @@ subscribe(APP_READY, () => {
           </UserMessagesProvider>
         </NoticesProvider>
       </PathFixesProvider>
+      <FooterSlot />
     </AppProvider>,
     document.getElementById('root'),
   );
