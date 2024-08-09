@@ -19,7 +19,7 @@ import {
 } from '../../../../data/selectors';
 import { getCourseOutlineStructure } from '../../../../data/thunks';
 import SidebarSection from './components/SidebarSection';
-import SidebarSequence from './components/SidebarSequence';
+import SidebarSequence from './components/GymSidebarSequence';
 import { ID } from './constants';
 import { useCourseOutlineSidebar } from './hooks';
 import messages from './messages';

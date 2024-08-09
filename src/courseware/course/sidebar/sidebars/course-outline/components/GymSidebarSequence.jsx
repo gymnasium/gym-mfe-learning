@@ -51,31 +51,21 @@ const SidebarSequence = ({
   );
 
   return (
-    <li>
-      <Collapsible
-        className={classNames('mb-2', { 'active-section': isActiveSequence, 'bg-info-100': isActiveSequence && !open })}
-        styling="card-lg text-break"
-        title={sectionTitle}
-        open={open}
-        onToggle={() => setOpen(!open)}
-      >
-        <ol className="list-unstyled">
-          {unitIds.map((unitId, index) => (
-            <SidebarUnit
-              key={unitId}
-              id={unitId}
-              courseId={courseId}
-              sequenceId={id}
-              unit={units[unitId]}
-              isActive={activeUnitId === unitId}
-              activeUnitId={activeUnitId}
-              isFirst={index === 0}
-              isLocked={type === UNIT_ICON_TYPES.lock}
-            />
-          ))}
-        </ol>
-      </Collapsible>
-    </li>
+    <>
+      {unitIds.map((unitId, index) => (
+        <SidebarUnit
+          key={unitId}
+          id={unitId}
+          courseId={courseId}
+          sequenceId={id}
+          unit={units[unitId]}
+          isActive={activeUnitId === unitId}
+          activeUnitId={activeUnitId}
+          isFirst={index === 0}
+          isLocked={type === UNIT_ICON_TYPES.lock}
+        />
+      ))}
+    </>
   );
 };
 
