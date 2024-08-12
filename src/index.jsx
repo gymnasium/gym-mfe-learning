@@ -18,7 +18,7 @@ import DiscussionTab from './course-home/discussion-tab/DiscussionTab';
 import messages from './i18n';
 import { UserMessagesProvider } from './generic/user-messages';
 
-// import './GymApp.scss';
+import './GymApp.scss';
 
 import OutlineTab from './course-home/outline-tab';
 import { CourseExit } from './courseware/course/course-exit';
