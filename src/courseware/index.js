@@ -1,1 +1,3 @@
-export { default } from './CoursewareContainer';
+export { default } from './GymCoursewareContainer';
+// export { default } from './CoursewareContainer';
+
