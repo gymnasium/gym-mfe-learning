@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dompurify from 'dompurify';
 
-import { getConfig } from '@edx/frontend-platform';
-
 const SanitizeHtmlFragment = ({
   className,
   html,
