@@ -6,7 +6,7 @@ import { Button } from '@openedx/paragon';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import CourseCelebration from './CourseCelebration';
+import CourseCelebration from './GymCourseCelebration';
 import CourseInProgress from './CourseInProgress';
 import CourseNonPassing from './CourseNonPassing';
 import { COURSE_EXIT_MODES, getCourseExitMode } from './utils';

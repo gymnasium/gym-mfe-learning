@@ -60,6 +60,7 @@ const CertificateStatus = ({ intl }) => {
   const { administrator } = getAuthenticatedUser();
 
   let certStatus;
+  // TODO: for Gymnasium, update certWebViewUrl to use Accredible's endpoint
   let certWebViewUrl;
   const timezoneFormatArgs = userTimezone ? { timeZone: userTimezone } : {};
 

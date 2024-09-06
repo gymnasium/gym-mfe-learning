@@ -100,6 +100,7 @@ const CourseCelebration = ({ intl }) => {
           />
         </p>
       );
+      // TODO: for Gymnasium, update the buttonLocation
       if (certWebViewUrl) {
         buttonLocation = `${getConfig().LMS_BASE_URL}${certWebViewUrl}`;
         buttonText = intl.formatMessage(messages.viewCertificateButton);
