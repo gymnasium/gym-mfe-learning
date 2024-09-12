@@ -144,7 +144,7 @@ const CertificateStatus = ({ intl }) => {
         );
         if (certWebViewUrl) {
           certEventName = 'earned_viewable';
-          buttonLocation = `${getConfig().LMS_BASE_URL}${certWebViewUrl}`;
+          buttonLocation = `${certWebViewUrl}`;
           buttonText = intl.formatMessage(messages.viewableButton);
         }
         break;

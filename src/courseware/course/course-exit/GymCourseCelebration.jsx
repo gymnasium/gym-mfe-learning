@@ -102,7 +102,7 @@ const CourseCelebration = ({ intl }) => {
       );
       // TODO: for Gymnasium, update the buttonLocation
       if (certWebViewUrl) {
-        buttonLocation = `${getConfig().LMS_BASE_URL}${certWebViewUrl}`;
+        buttonLocation = `${certWebViewUrl}`;
         buttonText = intl.formatMessage(messages.viewCertificateButton);
       }
       if (linkedinAddToProfileUrl) {
