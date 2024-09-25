@@ -35,7 +35,7 @@ const ProgressTab = () => {
   return (
     <div className="progress-tab-content">
       <ProgressHeader />
-      <div className="row w-100 m-0">
+      <div className="content-panels row w-100 m-0">
         {/* Main body */}
         <div className="main-panel col-12 col-md-8 p-0">
           {!disableProgressGraph && <CourseCompletion />}
