@@ -78,6 +78,21 @@ describe('NotificationsWidget', () => {
     });
   });
 
+  it('includes notification_widget_slot', async () => {
+    await fetchAndRender(
+      <SidebarContext.Provider value={{
+        currentSidebar: ID,
+        courseId,
+        hideNotificationbar: false,
+        isNotificationbarAvailable: true,
+      }}
+      >
+        <NotificationsWidget />
+      </SidebarContext.Provider>,
+    );
+    expect(screen.getByTestId('notification_widget_slot')).toBeInTheDocument();
+  });
+
   it('renders upgrade card', async () => {
     await fetchAndRender(
       <SidebarContext.Provider value={{
@@ -90,9 +105,11 @@ describe('NotificationsWidget', () => {
         <NotificationsWidget />
       </SidebarContext.Provider>,
     );
-    const UpgradeNotification = document.querySelector('.upgrade-notification');
 
+    // The Upgrade Notification should be inside the PluginSlot.
+    const UpgradeNotification = document.querySelector('.upgrade-notification');
     expect(UpgradeNotification).toBeInTheDocument();
+
     expect(screen.getByRole('link', { name: 'Upgrade for $149' })).toBeInTheDocument();
     expect(screen.queryByText('You have no new notifications at this time.')).not.toBeInTheDocument();
   });
@@ -152,7 +169,6 @@ describe('NotificationsWidget', () => {
   });
 
   it('marks notification as seen 3 seconds later', async () => {
-    jest.useFakeTimers();
     const onNotificationSeen = jest.fn();
     await fetchAndRender(
       <SidebarContext.Provider value={{
@@ -167,7 +183,6 @@ describe('NotificationsWidget', () => {
       </SidebarContext.Provider>,
     );
     expect(onNotificationSeen).toHaveBeenCalledTimes(0);
-    jest.advanceTimersByTime(3000);
-    expect(onNotificationSeen).toHaveBeenCalledTimes(1);
+    await waitFor(() => expect(onNotificationSeen).toHaveBeenCalledTimes(1), { timeout: 3500 });
   });
 });
