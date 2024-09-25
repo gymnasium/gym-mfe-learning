@@ -33,11 +33,11 @@ const ProgressTab = () => {
 
   const wideScreen = windowWidth >= breakpoints.large.minWidth;
   return (
-    <>
+    <div className="progress-tab-content">
       <ProgressHeader />
       <div className="row w-100 m-0">
         {/* Main body */}
-        <div className="col-12 col-md-8 p-0">
+        <div className="main-panel col-12 col-md-8 p-0">
           {!disableProgressGraph && <CourseCompletion />}
           {!wideScreen && <CertificateStatus />}
           <CourseGrade />
@@ -48,12 +48,12 @@ const ProgressTab = () => {
         </div>
 
         {/* Side panel */}
-        <div className="col-12 col-md-4 p-0 px-md-4">
+        <div className="side-panel col-12 col-md-4 p-0 px-md-4">
           {wideScreen && <CertificateStatus />}
           <RelatedLinks />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
