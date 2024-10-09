@@ -10,7 +10,7 @@ import { unsubscribeFromCourseGoal } from '../data/api';
 import messages from './messages';
 import ResultPage from './ResultPage';
 
-import { GymFooter as FooterSlot, GymHeader } from '@openedx/gym-frontend';
+import { GymHeader } from '@openedx/gym-frontend';
 
 const GoalUnsubscribe = ({ intl }) => {
   const { token } = useParams();
@@ -49,7 +49,6 @@ const GoalUnsubscribe = ({ intl }) => {
           <ResultPage error={error} courseTitle={data.courseTitle} />
         )}
       </main>
-      {/* <FooterSlot /> */}
     </>
   );
 };

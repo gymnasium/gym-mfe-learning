@@ -4,6 +4,7 @@ import {
   getConfig,
 } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage, PageWrap } from '@edx/frontend-platform/react';
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Routes, Route } from 'react-router-dom';
@@ -37,15 +38,34 @@ import DecodePageRoute from './decode-page-route';
 import { DECODE_ROUTES, ROUTES } from './constants';
 import PreferencesUnsubscribe from './preferences-unsubscribe';
 
-import { GymFooter as FooterSlot, GymHeader } from '@openedx/gym-frontend';
+import { GymFooter as FooterSlot } from '@openedx/gym-frontend';
+
+import {Intercom, boot, update } from "@intercom/messenger-js-sdk";
+
+const INTERCOM_APP_ID = () => getConfig().INTERCOM_APP_ID;
 
 subscribe(APP_READY, () => {
+
+  if (INTERCOM_APP_ID()) {
+    try {
+      Intercom({app_id: INTERCOM_APP_ID()});
+
+      const INTERCOM_SETTINGS = {
+        email: getAuthenticatedUser().email,
+        user_id: getAuthenticatedUser().username,
+      }
+    
+      update(INTERCOM_SETTINGS);
+    } catch (error) {
+      logError(error);
+    }
+  }
+
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
         <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
       </Helmet>
-      {/* <GymHeader secondaryNav="courses" activeLink="courses" /> */}
       <PathFixesProvider>
         <NoticesProvider>
           <UserMessagesProvider>
@@ -151,6 +171,8 @@ subscribe(APP_INIT_ERROR, (error) => {
 });
 
 initialize({
+  requireAuthenticatedUser: true,
+  hydrateAuthenticatedUser: true,
   handlers: {
     config: () => {
       mergeConfig({
@@ -162,6 +184,7 @@ initialize({
         ENABLE_JUMPNAV: process.env.ENABLE_JUMPNAV || null,
         ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
         INSIGHTS_BASE_URL: process.env.INSIGHTS_BASE_URL || null,
+        INTERCOM_APP_ID: process.env.INTERCOM_APP_ID || null,
         SEARCH_CATALOG_URL: process.env.SEARCH_CATALOG_URL || null,
         SOCIAL_UTM_MILESTONE_CAMPAIGN: process.env.SOCIAL_UTM_MILESTONE_CAMPAIGN || null,
         STUDIO_BASE_URL: process.env.STUDIO_BASE_URL || null,

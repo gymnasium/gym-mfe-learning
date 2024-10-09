@@ -11,7 +11,7 @@ import { LOADED, LOADING } from '../course-home/data/slice';
 import PageLoading from './PageLoading';
 import messages from '../tab-page/messages';
 
-import { GymFooter as FooterSlot, GymHeader } from '@openedx/gym-frontend';
+import { GymHeader } from '@openedx/gym-frontend';
 
 const CourseAccessErrorPage = ({ intl }) => {
   const { courseId } = useParams();
@@ -34,7 +34,6 @@ const CourseAccessErrorPage = ({ intl }) => {
         <PageLoading
           srMessage={intl.formatMessage(messages.loading)}
         />
-        {/* <FooterSlot /> */}
       </>
     );
   }
@@ -53,7 +52,6 @@ const CourseAccessErrorPage = ({ intl }) => {
           }}
         />
       </main>
-      {/* <FooterSlot /> */}
     </>
   );
 };

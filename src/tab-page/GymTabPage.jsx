@@ -17,7 +17,7 @@ import LoadedTabPage from './LoadedTabPage';
 import { setCallToActionToast } from '../course-home/data/slice';
 import LaunchCourseHomeTourButton from '../product-tours/newUserCourseHomeTour/LaunchCourseHomeTourButton';
 
-import { GymFooter as FooterSlot, GymHeader } from '@openedx/gym-frontend';
+import { GymHeader } from '@openedx/gym-frontend';
 
 const TabPage = ({ intl, ...props }) => {
   const {
@@ -66,7 +66,7 @@ const TabPage = ({ intl, ...props }) => {
         </>
       )}
 
-      <GymHeader secondaryNav="courses" activeLink="courses" courseOrg={org} courseNumber={number} courseTitle={title} />
+      <GymHeader secondaryNav="courses" activeLink="courses" courseId={courseId} courseOrg={org} courseNumber={number} courseTitle={title} />
 
       {courseStatus === 'loading' && (
         <PageLoading srMessage={intl.formatMessage(messages.loading)} />
@@ -82,7 +82,6 @@ const TabPage = ({ intl, ...props }) => {
           {intl.formatMessage(messages.failure)}
         </p>
       )}
-      {/* <FooterSlot /> */}
     </>
   );
 };
