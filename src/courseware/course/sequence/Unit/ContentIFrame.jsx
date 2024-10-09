@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
 import { ErrorPage } from '@edx/frontend-platform/react';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { ModalDialog, Modal } from '@openedx/paragon';
+import { useSelector } from 'react-redux';
 
 import PageLoading from '@src/generic/PageLoading';
 import * as hooks from './hooks';
@@ -52,7 +52,8 @@ const ContentIFrame = ({
     modalOptions,
     handleModalClose,
   } = hooks.useModalIFrameData();
-
+  const { courseId } = useSelector(state => state.courseware);
+  const { certificateData } = useSelector(state => state.models.coursewareMeta[courseId]);
   const contentIFrameProps = {
     id: elementId,
     src: iframeUrl,
@@ -87,6 +88,23 @@ const ContentIFrame = ({
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
+          {
+            title.toLowerCase() === 'final exam' && certificateData?.certStatus === 'downloadable' && certificateData?.certWebViewUrl && (
+              <div className="final-exam-wrapper">
+                <div className="final-exam-title">You did it! 🎉 {courseId}</div>
+                <div>Congratulations on passing the final exam!</div>
+                <div className="final-exam-description">
+                  Now you can show off your achievement by sharing your certificate on social media. You can always
+                  access your certificate from the Dashboard.
+                </div>
+                <div>
+                  Want to let us know how we&apos;re doing? Take a moment to share
+                  your thoughts with us. Your feedback will help shape our future courses.
+                  <a href="https://www.surveymonkey.com/s/JYJPMSS" target="_blank" rel="noopener noreferrer">Take Survey</a>
+                </div>
+              </div>
+            )
+          }
         </div>
       )}
       {modalOptions.isOpen && (modalOptions.isFullscreen
