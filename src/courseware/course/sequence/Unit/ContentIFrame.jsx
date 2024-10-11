@@ -89,9 +89,9 @@ const ContentIFrame = ({
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
           {
-            title.toLowerCase() === 'final exam' && certificateData?.certStatus === 'downloadable' && certificateData?.certWebViewUrl && (
+            title.toLowerCase() === 'final exam' && certificateData?.certWebViewUrl && (
               <div className="final-exam-wrapper">
-                <div className="final-exam-title">You did it! 🎉 {courseId}</div>
+                <div className="final-exam-title">You did it! 🎉</div>
                 <div>Congratulations on passing the final exam!</div>
                 <div className="final-exam-description">
                   Now you can show off your achievement by sharing your certificate on social media. You can always
