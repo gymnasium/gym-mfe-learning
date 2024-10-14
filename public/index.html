@@ -19,7 +19,7 @@
     <% } %>
 
     <% if (process.env.ONETRUST_COOKIE_SCRIPT_ID) { %>
-      <script async src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" data-language="en" type="text/javascript" charset="UTF-8" data-domain-script="<%= process.env.ONETRUST_COOKIE_SCRIPT_ID %>"></script>
+      <script async src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js" type="text/javascript" charset="UTF-8" data-domain-script="<%= process.env.ONETRUST_COOKIE_SCRIPT_ID %>"></script>
       <script type="text/javascript">function OptanonWrapper(){}</script>
     <% } %>
   </head>
