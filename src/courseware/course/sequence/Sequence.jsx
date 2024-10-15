@@ -29,6 +29,11 @@ import HiddenAfterDue from './hidden-after-due';
 import { SequenceNavigation, UnitNavigation } from './sequence-navigation';
 import SequenceContent from './SequenceContent';
 
+// Prevent unenrolled viewers from seeing course content!
+import usePrivateCourseAlert from '../../../course-home/outline-tab/alerts/private-course-alert';
+import { AlertList } from '../../../generic/user-messages';
+import AccountActivationAlert from '../../../alerts/logistration-alert/AccountActivationAlert';
+
 const Sequence = ({
   unitId,
   sequenceId,
@@ -163,7 +168,11 @@ const Sequence = ({
     />
   );
 
-  const defaultContent = (
+  // Is the user enrolled?
+  const isEnrolled = useModel('courseHomeMeta', courseId).isEnrolled;
+  const privateCourseAlert = usePrivateCourseAlert(courseId);
+
+  const defaultContent = isEnrolled && (
     <>
       <div className="sequence-container d-inline-flex flex-row w-100">
         <CourseOutlineTrigger />
@@ -217,6 +226,13 @@ const Sequence = ({
   if (sequenceStatus === 'loaded') {
     return (
       <div>
+        <AccountActivationAlert />
+        <AlertList
+          topic="outline-private-alerts"
+          customAlerts={{
+            ...privateCourseAlert,
+          }}
+        />
         <SequenceExamWrapper
           sequence={sequence}
           courseId={courseId}
