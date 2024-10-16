@@ -64,7 +64,7 @@ const PrivateCourseAlert = ({ intl, payload }) => {
   );
 
   return (
-    <Alert variant="light" data-testid="private-course-alert">
+    <Alert variant="light" className="private-course-alert" data-testid="private-course-alert">
       {anonymousUser && (
         <>
           <p className="font-weight-bold">
