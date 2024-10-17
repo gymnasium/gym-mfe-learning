@@ -74,8 +74,6 @@ const OutlineTab = ({ intl }) => {
     courserun_key: courseId,
   };
 
-  const isEnrolled = useModel('courseHomeMeta', courseId).isEnrolled;
-
   // Below the course title alerts (appearing in the order listed here)
   const courseStartAlert = useCourseStartAlert(courseId);
   const courseEndAlert = useCourseEndAlert(courseId);
@@ -143,10 +141,6 @@ const OutlineTab = ({ intl }) => {
             }}
           />
         </div>
-
-        {/* Do not show course content unless the user is enrolled */}
-        {isEnrolled && (
-
         <div className="col col-12 col-md-8">
           <AlertList
             topic="outline-course-alerts"
@@ -164,7 +158,6 @@ const OutlineTab = ({ intl }) => {
               <UpgradeToShiftDatesAlert model="outline" logUpgradeLinkClick={logUpgradeToShiftDatesLinkClick} />
             </>
           )}
-
           <StartOrResumeCourseCard />
           <WelcomeMessage courseId={courseId} />
           {rootCourseId && (
@@ -190,8 +183,7 @@ const OutlineTab = ({ intl }) => {
             </>
           )}
         </div>
-        )}
-        {isEnrolled && rootCourseId && (
+        {rootCourseId && (
           <div className="col col-12 col-md-4">
             <ProctoringInfoPanel />
             { /** Defer showing the goal widget until the ProctoringInfoPanel has resolved or has been determined as
