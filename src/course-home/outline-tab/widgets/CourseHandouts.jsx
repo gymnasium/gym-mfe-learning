@@ -20,7 +20,7 @@ const CourseHandouts = ({ intl }) => {
   }
 
   return (
-    <section className="mb-4">
+    <section className="sidebar-course-handouts mb-4">
       <h2 className="h4">{intl.formatMessage(messages.handouts)}</h2>
       <SanitizeHtmlFragment
         className="small"
