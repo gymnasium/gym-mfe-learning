@@ -162,13 +162,14 @@ const OutlineTab = ({ intl }) => {
           <WelcomeMessage courseId={courseId} />
           {rootCourseId && (
             <>
-              <div className="row w-100 m-0 mb-3 justify-content-end">
+              {/* Disable expand/contract button */}
+              {/* <div className="expand-collapse-button-wrapper row w-100 m-0 mb-3 justify-content-end">
                 <div className="col-12 col-md-auto p-0">
                   <Button variant="outline-primary" block onClick={() => { setExpandAll(!expandAll); }}>
                     {expandAll ? intl.formatMessage(messages.collapseAll) : intl.formatMessage(messages.expandAll)}
                   </Button>
                 </div>
-              </div>
+              </div> */}
               <ol id="courseHome-outline" className="list-unstyled">
                 {courses[rootCourseId].sectionIds.map((sectionId) => (
                   <Section
