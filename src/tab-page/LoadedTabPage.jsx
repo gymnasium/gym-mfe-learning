@@ -44,12 +44,13 @@ const LoadedTabPage = ({
 
   return (
     <>
-      <ProductTours
+      {/* Disable Product Tours */}
+      {/* <ProductTours
         activeTab={activeTabSlug}
         courseId={courseId}
         isStreakCelebrationOpen={isStreakCelebrationOpen}
         org={org}
-      />
+      /> */}
       <Helmet>
         <title>{`${activeTab ? `${activeTab.title} | ` : ''}${title} | ${getConfig().SITE_NAME}`}</title>
       </Helmet>

@@ -62,7 +62,8 @@ const TabPage = ({ intl, ...props }) => {
           >
             {toastHeader}
           </Toast>
-          {metadataModel === 'courseHomeMeta' && (<LaunchCourseHomeTourButton srOnly />)}
+          {/* Disable Course Tour Button */}
+          {/* {metadataModel === 'courseHomeMeta' && (<LaunchCourseHomeTourButton srOnly />)} */}
         </>
       )}
 

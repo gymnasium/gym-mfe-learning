@@ -74,7 +74,8 @@ const CourseTools = ({ intl }) => {
           </li>
         ))}
         <li className="small" id="courseHome-launchTourLink">
-          <LaunchCourseHomeTourButton />
+          {/* Disable Course Tour Button */}
+          {/* <LaunchCourseHomeTourButton /> */}
         </li>
       </ul>
     </section>
