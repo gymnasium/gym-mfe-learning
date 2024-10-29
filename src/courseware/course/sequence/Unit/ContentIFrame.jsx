@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ErrorPage } from '@edx/frontend-platform/react';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { ModalDialog, Modal } from '@openedx/paragon';
 import { useSelector } from 'react-redux';
-
 import PageLoading from '@src/generic/PageLoading';
 import * as hooks from './hooks';
+import { getProgressTabData } from '../../../../course-home/data/api';
 
 /**
  * Feature policy for iframe, allowing access to certain courseware-related media.
@@ -64,6 +64,7 @@ const ContentIFrame = ({
     referrerPolicy: 'origin',
     onLoad: handleIFrameLoad,
   };
+  const [isPassing, setIsPassing] = useState(false);
 
   let modalContent;
   if (modalOptions.isOpen) {
@@ -80,6 +81,23 @@ const ContentIFrame = ({
       );
   }
 
+  useEffect(() => {
+    const handleMessage = async (event) => {
+      // Check if this is our submission message
+      if (event.data?.type === 'problem_check' && event.data?.action === 'submit') {
+        if (courseId) {
+          // wait for a second to get the latest data
+          setTimeout(async () => {
+            const progressData = await getProgressTabData(courseId);
+            setIsPassing(progressData.courseGrade.isPassing);
+          }, 1000);
+        }
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
+
   return (
     <>
       {(shouldShowContent && !hasLoaded) && (
@@ -89,7 +107,7 @@ const ContentIFrame = ({
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
           {
-            title.toLowerCase() === 'final exam' && certificateData?.certWebViewUrl && (
+            title.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (
               <div className="final-exam-wrapper">
                 <div className="final-exam-title">You did it! 🎉</div>
                 <div>Congratulations on passing the final exam!</div>
