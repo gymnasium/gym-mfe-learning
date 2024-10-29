@@ -1,2 +1,3 @@
-export { default as TabContainer } from './TabContainer';
-export { default as TabPage } from './TabPage';
+export { default as TabContainer } from './GymTabContainer';
+export { default as TabPage } from './GymTabPage';
+// export { default as TabPage } from './TabPage';

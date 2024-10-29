@@ -1,12 +1,10 @@
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
-
 import {
   APP_INIT_ERROR, APP_READY, subscribe, initialize,
   mergeConfig,
   getConfig,
 } from '@edx/frontend-platform';
 import { AppProvider, ErrorPage, PageWrap } from '@edx/frontend-platform/react';
+import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Routes, Route } from 'react-router-dom';
@@ -18,14 +16,15 @@ import DiscussionTab from './course-home/discussion-tab/DiscussionTab';
 import messages from './i18n';
 import { UserMessagesProvider } from './generic/user-messages';
 
-import './index.scss';
+import './GymApp.scss';
+
 import OutlineTab from './course-home/outline-tab';
 import { CourseExit } from './courseware/course/course-exit';
 import CoursewareContainer from './courseware';
 import CoursewareRedirectLandingPage from './courseware/CoursewareRedirectLandingPage';
 import DatesTab from './course-home/dates-tab';
 import GoalUnsubscribe from './course-home/goal-unsubscribe';
-import ProgressTab from './course-home/progress-tab/ProgressTab';
+import ProgressTab from './course-home/progress-tab/GymProgressTab';
 import { TabContainer } from './tab-page';
 
 import { fetchDatesTab, fetchOutlineTab, fetchProgressTab } from './course-home/data';
@@ -34,11 +33,34 @@ import initializeStore from './store';
 import NoticesProvider from './generic/notices';
 import PathFixesProvider from './generic/path-fixes';
 import LiveTab from './course-home/live-tab/LiveTab';
-import CourseAccessErrorPage from './generic/CourseAccessErrorPage';
+import CourseAccessErrorPage from './generic/GymCourseAccessErrorPage';
 import DecodePageRoute from './decode-page-route';
 import { DECODE_ROUTES, ROUTES } from './constants';
+import PreferencesUnsubscribe from './preferences-unsubscribe';
+
+import { GymFooter as FooterSlot } from '@openedx/gym-frontend';
+
+import {Intercom, boot, update } from "@intercom/messenger-js-sdk";
+
+const INTERCOM_APP_ID = () => getConfig().INTERCOM_APP_ID;
 
 subscribe(APP_READY, () => {
+
+  if (INTERCOM_APP_ID()) {
+    try {
+      Intercom({app_id: INTERCOM_APP_ID()});
+
+      const INTERCOM_SETTINGS = {
+        email: getAuthenticatedUser().email,
+        user_id: getAuthenticatedUser().username,
+      }
+    
+      update(INTERCOM_SETTINGS);
+    } catch (error) {
+      logError(error);
+    }
+  }
+
   ReactDOM.render(
     <AppProvider store={initializeStore()}>
       <Helmet>
@@ -50,6 +72,7 @@ subscribe(APP_READY, () => {
             <Routes>
               <Route path={ROUTES.UNSUBSCRIBE} element={<PageWrap><GoalUnsubscribe /></PageWrap>} />
               <Route path={ROUTES.REDIRECT} element={<PageWrap><CoursewareRedirectLandingPage /></PageWrap>} />
+              <Route path={ROUTES.PREFERENCES_UNSUBSCRIBE} element={<PageWrap><PreferencesUnsubscribe /></PageWrap>} />
               <Route
                 path={DECODE_ROUTES.ACCESS_DENIED}
                 element={<DecodePageRoute><CourseAccessErrorPage /></DecodePageRoute>}
@@ -137,6 +160,7 @@ subscribe(APP_READY, () => {
           </UserMessagesProvider>
         </NoticesProvider>
       </PathFixesProvider>
+      <FooterSlot />
     </AppProvider>,
     document.getElementById('root'),
   );
@@ -147,6 +171,8 @@ subscribe(APP_INIT_ERROR, (error) => {
 });
 
 initialize({
+  requireAuthenticatedUser: true,
+  hydrateAuthenticatedUser: true,
   handlers: {
     config: () => {
       mergeConfig({
@@ -158,6 +184,7 @@ initialize({
         ENABLE_JUMPNAV: process.env.ENABLE_JUMPNAV || null,
         ENABLE_NOTICES: process.env.ENABLE_NOTICES || null,
         INSIGHTS_BASE_URL: process.env.INSIGHTS_BASE_URL || null,
+        INTERCOM_APP_ID: process.env.INTERCOM_APP_ID || null,
         SEARCH_CATALOG_URL: process.env.SEARCH_CATALOG_URL || null,
         SOCIAL_UTM_MILESTONE_CAMPAIGN: process.env.SOCIAL_UTM_MILESTONE_CAMPAIGN || null,
         STUDIO_BASE_URL: process.env.STUDIO_BASE_URL || null,

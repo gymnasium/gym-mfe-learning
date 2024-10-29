@@ -62,7 +62,7 @@ const CourseTools = ({ intl }) => {
   };
 
   return (
-    <section className="mb-4">
+    <section className="sidebar-course-tools mb-4">
       <h2 className="h4">{intl.formatMessage(messages.tools)}</h2>
       <ul className="list-unstyled">
         {courseTools.map((courseTool) => (
@@ -74,7 +74,8 @@ const CourseTools = ({ intl }) => {
           </li>
         ))}
         <li className="small" id="courseHome-launchTourLink">
-          <LaunchCourseHomeTourButton />
+          {/* Disable Course Tour Button */}
+          {/* <LaunchCourseHomeTourButton /> */}
         </li>
       </ul>
     </section>

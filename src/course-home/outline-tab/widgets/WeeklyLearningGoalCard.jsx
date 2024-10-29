@@ -13,7 +13,7 @@ import messages from '../messages';
 import LearningGoalButton from './LearningGoalButton';
 import { saveWeeklyLearningGoal } from '../../data';
 import { useModel } from '../../../generic/model-store';
-import './FlagButton.scss';
+// import './FlagButton.scss';
 
 const WeeklyLearningGoalCard = ({
   daysPerWeek,

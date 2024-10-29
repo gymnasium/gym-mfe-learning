@@ -5,6 +5,7 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import { injectIntl, intlShape } from '@edx/frontend-platform/i18n';
 import { Button } from '@openedx/paragon';
+import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import { AlertList } from '../../generic/user-messages';
 
 import CourseDates from './widgets/CourseDates';
@@ -161,13 +162,14 @@ const OutlineTab = ({ intl }) => {
           <WelcomeMessage courseId={courseId} />
           {rootCourseId && (
             <>
-              <div className="row w-100 m-0 mb-3 justify-content-end">
+              {/* Disable expand/contract button */}
+              {/* <div className="expand-collapse-button-wrapper row w-100 m-0 mb-3 justify-content-end">
                 <div className="col-12 col-md-auto p-0">
                   <Button variant="outline-primary" block onClick={() => { setExpandAll(!expandAll); }}>
                     {expandAll ? intl.formatMessage(messages.collapseAll) : intl.formatMessage(messages.expandAll)}
                   </Button>
                 </div>
-              </div>
+              </div> */}
               <ol id="courseHome-outline" className="list-unstyled">
                 {courses[rootCourseId].sectionIds.map((sectionId) => (
                   <Section
@@ -194,19 +196,24 @@ const OutlineTab = ({ intl }) => {
               />
             )}
             <CourseTools />
-            <UpgradeNotification
-              offer={offer}
-              verifiedMode={verifiedMode}
-              accessExpiration={accessExpiration}
-              contentTypeGatingEnabled={datesBannerInfo.contentTypeGatingEnabled}
-              marketingUrl={marketingUrl}
-              upsellPageName="course_home"
-              userTimezone={userTimezone}
-              shouldDisplayBorder
-              timeOffsetMillis={timeOffsetMillis}
-              courseId={courseId}
-              org={org}
-            />
+            <PluginSlot
+              id="outline_tab_notifications_slot"
+              pluginProps={{ courseId }}
+            >
+              <UpgradeNotification
+                offer={offer}
+                verifiedMode={verifiedMode}
+                accessExpiration={accessExpiration}
+                contentTypeGatingEnabled={datesBannerInfo.contentTypeGatingEnabled}
+                marketingUrl={marketingUrl}
+                upsellPageName="course_home"
+                userTimezone={userTimezone}
+                shouldDisplayBorder
+                timeOffsetMillis={timeOffsetMillis}
+                courseId={courseId}
+                org={org}
+              />
+            </PluginSlot>
             <CourseDates />
             <CourseHandouts />
           </div>

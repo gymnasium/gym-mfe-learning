@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useModel } from '../../generic/model-store';
 import { isLearnerAssignment } from '../dates-tab/utils';
-import './DateSummary.scss';
+// import './DateSummary.scss';
 
 const DateSummary = ({
   dateBlock,
