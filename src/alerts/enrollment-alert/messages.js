@@ -17,6 +17,11 @@ const messages = defineMessages({
     description: 'A link prompting the user to click on it to enroll in the currently viewed course.'
       + 'This text is meant to be used at the beginning of a sentence (example: Enroll now to view course content.)',
   },
+  enrollNowButton: {
+    id: 'learning.enrollment.enrollNow.Button',
+    defaultMessage: 'Enroll now',
+    description: 'A prominent button prompting the user to click on it to enroll in the currently viewed course.',
+  },
   enrollNowSentence: {
     id: 'learning.enrollment.enrollNow.Sentence',
     defaultMessage: 'Enroll now.',

@@ -7,12 +7,14 @@ import { Alert, Button, Hyperlink } from '@openedx/paragon';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
-import enrollmentMessages from '../../../../alerts/enrollment-alert/messages';
-import genericMessages from '../../../../generic/messages';
+import enrollmentMessages from '@src/alerts/enrollment-alert/messages';
+import genericMessages from '@src/generic/messages';
 import messages from './messages';
 import outlineMessages from '../../messages';
-import useEnrollClickHandler from '../../../../alerts/enrollment-alert/clickHook';
-import { useModel } from '../../../../generic/model-store';
+import useEnrollClickHandler from '@src/alerts/enrollment-alert/clickHook';
+import { useModel } from '@src/generic/model-store';
+
+const enableAlternateEnrollmentAlert = () => getConfig().ENABLE_ALTERNATE_ENROLLMENT_ALERT;
 
 const PrivateCourseAlert = ({ intl, payload }) => {
   const {
@@ -33,6 +35,16 @@ const PrivateCourseAlert = ({ intl, payload }) => {
   );
 
   const enrollNowButton = (
+    <Button
+      disabled={loading}
+      variant="button"
+      onClick={enrollClickHandler}
+    >
+      {intl.formatMessage(enrollmentMessages.enrollNowButton)}
+    </Button>
+  );
+
+  const enrollNowInlineButton = (
     <Button
       disabled={loading}
       variant="link"
@@ -85,12 +97,24 @@ const PrivateCourseAlert = ({ intl, payload }) => {
         <>
           <p className="font-weight-bold">{intl.formatMessage(outlineMessages.welcomeTo)} {title}</p>
           {canEnroll && (
-            <div className="d-flex">
-              {enrollNowButton}
-              {intl.formatMessage(messages.toAccess)}
+            <div className={!enableAlternateEnrollmentAlert() && 'd-flex'}>
+              {enableAlternateEnrollmentAlert() && (
+                <>
+                  <p>{intl.formatMessage(messages.toAccessAlt)}</p>
+                  {enrollNowButton}
+                </>
+              )}
+
+              {!enableAlternateEnrollmentAlert() && (
+                <>
+                  {enrollNowInlineButton} {intl.formatMessage(messages.toAccess)}
+                </>
+              )}
+
               {loading && <FontAwesomeIcon icon={faSpinner} spin />}
             </div>
           )}
+
           {!canEnroll && (
             <>
               {intl.formatMessage(enrollmentMessages.alert)}
