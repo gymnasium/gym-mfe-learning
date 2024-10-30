@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 
-import { getConfig } from '@edx/frontend-platform';
 import { useAlert } from '../../../../generic/user-messages';
 import { useModel } from '../../../../generic/model-store';
 
@@ -60,7 +59,7 @@ function useCertificateStatusAlert(courseId) {
   );
   let certURL = '';
   if (certWebViewUrl) {
-    certURL = `${getConfig().LMS_BASE_URL}${certWebViewUrl}`;
+    certURL = certWebViewUrl;
   }
   const hasAlertingCertStatus = verifyCertStatusType(certStatus);
 

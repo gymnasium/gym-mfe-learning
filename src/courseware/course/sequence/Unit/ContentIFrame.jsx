@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
-import React from 'react';
-
+import React, { useEffect, useState } from 'react';
 import { ErrorPage } from '@edx/frontend-platform/react';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { ModalDialog, Modal } from '@openedx/paragon';
+import { useSelector } from 'react-redux';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
-
 import PageLoading from '@src/generic/PageLoading';
 import * as hooks from './hooks';
+import { getProgressTabData } from '../../../../course-home/data/api';
 
 /**
  * Feature policy for iframe, allowing access to certain courseware-related media.
@@ -54,7 +54,8 @@ const ContentIFrame = ({
     modalOptions,
     handleModalClose,
   } = hooks.useModalIFrameData();
-
+  const { courseId } = useSelector(state => state.courseware);
+  const { certificateData } = useSelector(state => state.models.coursewareMeta[courseId]);
   const contentIFrameProps = {
     id: elementId,
     src: iframeUrl,
@@ -65,6 +66,7 @@ const ContentIFrame = ({
     referrerPolicy: 'origin',
     onLoad: handleIFrameLoad,
   };
+  const [isPassing, setIsPassing] = useState(false);
 
   let modalContent;
   if (modalOptions.isOpen) {
@@ -80,6 +82,23 @@ const ContentIFrame = ({
         />
       );
   }
+
+  useEffect(() => {
+    const handleMessage = async (event) => {
+      // Check if this is our submission message
+      if (event.data?.type === 'problem_check' && event.data?.action === 'submit') {
+        if (courseId) {
+          // wait for a second to get the latest data
+          setTimeout(async () => {
+            const progressData = await getProgressTabData(courseId);
+            setIsPassing(progressData.courseGrade.isPassing);
+          }, 1000);
+        }
+      }
+    };
+    window.addEventListener('message', handleMessage);
+    return () => window.removeEventListener('message', handleMessage);
+  }, []);
 
   return (
     <>
@@ -99,6 +118,23 @@ const ContentIFrame = ({
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
+          {
+            title.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (
+              <div className="final-exam-wrapper">
+                <div className="final-exam-title">You did it! 🎉</div>
+                <div>Congratulations on passing the final exam!</div>
+                <div className="final-exam-description">
+                  Now you can show off your achievement by sharing your certificate on social media. You can always
+                  access your certificate from the Dashboard.
+                </div>
+                <div>
+                  Want to let us know how we&apos;re doing? Take a moment to share
+                  your thoughts with us. Your feedback will help shape our future courses.
+                  <a href="https://www.surveymonkey.com/s/JYJPMSS" target="_blank" rel="noopener noreferrer">Take Survey</a>
+                </div>
+              </div>
+            )
+          }
         </div>
       )}
       {modalOptions.isOpen && (modalOptions.isFullscreen

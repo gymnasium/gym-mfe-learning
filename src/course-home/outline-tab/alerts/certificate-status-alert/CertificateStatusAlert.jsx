@@ -86,9 +86,9 @@ const CertificateStatusAlert = ({ intl, payload }) => {
       };
     } else if (certStatus === CERT_STATUS_TYPE.REQUESTING) {
       alertProps.header = intl.formatMessage(certMessages.certStatusDownloadableHeader);
-      alertProps.buttonMessage = intl.formatMessage(certStatusMessages.requestableButton);
+      alertProps.buttonMessage = intl.formatMessage(certStatusMessages.viewableButton);
       alertProps.buttonVisible = true;
-      alertProps.buttonLink = '';
+      alertProps.buttonLink = certURL;
       alertProps.buttonAction = () => {
         sendAlertClickTracking('edx.ui.lms.course_outline.certificate_alert_request_cert_button.clicked');
         dispatch(requestCert(courseId));
@@ -163,29 +163,30 @@ const CertificateStatusAlert = ({ intl, payload }) => {
         buttonLink,
         buttonMessage,
       }) => (
-        <Alert variant={variant}>
-          <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
-            <div className={buttonVisible ? 'col-lg-8' : 'col-auto'}>
-              <FontAwesomeIcon icon={icon} className={iconClassName} />
-              <Alert.Heading>{header}</Alert.Heading>
-              {body}
-            </div>
-            {buttonVisible && (
-              <div className="flex-grow-0 pt-3 pt-lg-0">
-                <Button
-                  variant="primary"
-                  href={buttonLink}
-                  onClick={() => {
-                    if (buttonAction) { buttonAction(); }
-                  }}
-                >
-                  {buttonMessage}
-                </Button>
+        certURL && (
+          <Alert variant={variant}>
+            <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
+              <div className={buttonVisible ? 'col-lg-8' : 'col-auto'}>
+                <FontAwesomeIcon icon={icon} className={iconClassName} />
+                <Alert.Heading>{header}</Alert.Heading>
+                {body}
               </div>
-            )}
-          </div>
-        </Alert>
-
+              {buttonVisible && (
+                <div className="flex-grow-0 pt-3 pt-lg-0">
+                  <Button
+                    variant="primary"
+                    href={buttonLink}
+                    onClick={() => {
+                      if (buttonAction) { buttonAction(); }
+                    }}
+                  >
+                    {buttonMessage}
+                  </Button>
+                </div>
+              )}
+            </div>
+          </Alert>
+        )
       )}
     </AlertWrapper>
   );
