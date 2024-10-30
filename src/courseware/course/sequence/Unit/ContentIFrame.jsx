@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { getConfig } from '@edx/frontend-platform';
 import { ErrorPage } from '@edx/frontend-platform/react';
 import { StrictDict } from '@edx/react-unit-test-utils';
 import { ModalDialog, Modal } from '@openedx/paragon';
@@ -7,7 +8,10 @@ import { useSelector } from 'react-redux';
 import { PluginSlot } from '@openedx/frontend-plugin-framework';
 import PageLoading from '@src/generic/PageLoading';
 import * as hooks from './hooks';
-import { getProgressTabData } from '../../../../course-home/data/api';
+import { getProgressTabData } from '@src/course-home/data/api';
+import SanitizeHtmlFragment from '@src/course-home/outline-tab/SanitizeHtmlFragment';
+
+import { logInfo } from '@edx/frontend-platform/logging';
 
 /**
  * Feature policy for iframe, allowing access to certain courseware-related media.
@@ -27,6 +31,10 @@ export const testIDs = StrictDict({
   contentIFrame: 'content-iframe-test-id',
   modalIFrame: 'modal-iframe-test-id',
 });
+
+const examSuccess = () => getConfig().GYM_MSG?.learning?.exam_success;
+const examFailure = () => getConfig().GYM_MSG?.learning?.exam_failure;
+const examFailedAttempt = () => getConfig().GYM_MSG?.learning?.exam_failed_attempt;
 
 const ContentIFrame = ({
   iframeUrl,
@@ -95,6 +103,9 @@ const ContentIFrame = ({
         }
       }
     };
+
+    logInfo(`messages: `, examSuccess(), examFailedAttempt(), examFailure());
+
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, []);
@@ -114,28 +125,21 @@ const ContentIFrame = ({
           </PluginSlot>
         )
       )}
+
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
           {
-            title.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (
-              <div className="final-exam-wrapper">
-                <div className="final-exam-title">You did it! 🎉</div>
-                <div>Congratulations on passing the final exam!</div>
-                <div className="final-exam-description">
-                  Now you can show off your achievement by sharing your certificate on social media. You can always
-                  access your certificate from the Dashboard.
-                </div>
-                <div>
-                  Want to let us know how we&apos;re doing? Take a moment to share
-                  your thoughts with us. Your feedback will help shape our future courses.
-                  <a href="https://www.surveymonkey.com/s/JYJPMSS" target="_blank" rel="noopener noreferrer">Take Survey</a>
-                </div>
-              </div>
+            title?.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (
+              <SanitizeHtmlFragment
+                className="final-exam-wrapper"
+                html={examSuccess()}
+              />
             )
           }
         </div>
       )}
+
       {modalOptions.isOpen && (modalOptions.isFullscreen
         ? (
           <ModalDialog
