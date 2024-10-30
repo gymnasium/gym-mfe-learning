@@ -118,7 +118,7 @@ const ContentIFrame = ({
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
           {
-            title.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (
+            title?.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (
               <div className="final-exam-wrapper">
                 <div className="final-exam-title">You did it! 🎉</div>
                 <div>Congratulations on passing the final exam!</div>
