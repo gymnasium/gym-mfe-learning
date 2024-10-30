@@ -54,7 +54,6 @@ const ContentIFrame = ({
     modalOptions,
     handleModalClose,
   } = hooks.useModalIFrameData();
-  const { courseId } = useSelector(state => state.courseware);
   const { certificateData } = useSelector(state => state.models.coursewareMeta[courseId]);
   const contentIFrameProps = {
     id: elementId,
