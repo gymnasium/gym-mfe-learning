@@ -124,6 +124,14 @@ const OutlineTab = ({ intl }) => {
     }
   }, [location.search]);
 
+  const {
+    resumeCourse: {
+      hasVisitedCourse,
+    },
+  } = useModel('outline', courseId);
+
+  let sectionOpen;
+
   return (
     <>
       <div data-learner-type={learnerType} className="row w-100 mx-0 my-3 justify-content-between">
@@ -171,11 +179,13 @@ const OutlineTab = ({ intl }) => {
                 </div>
               </div> */}
               <ol id="courseHome-outline" className="list-unstyled">
-                {courses[rootCourseId].sectionIds.map((sectionId) => (
+                {courses[rootCourseId].sectionIds.map((sectionId, index) => (
+                  // there's probably a more elegant way of doing this, but this forces the first section open for first time visitors who haven't started the course.
+                  !hasVisitedCourse ? (sectionOpen = index === 0 ? true : false) : (sectionOpen = sections[sectionId].resumeBlock),
                   <Section
                     key={sectionId}
                     courseId={courseId}
-                    defaultOpen={sections[sectionId].resumeBlock}
+                    defaultOpen={sectionOpen}
                     expand={expandAll}
                     section={sections[sectionId]}
                   />
