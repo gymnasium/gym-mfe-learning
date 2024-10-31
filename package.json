@@ -1,7 +1,7 @@
 {
   "name": "@edx/frontend-app-learning",
-  "version": "1.0.2-gym.redwood",
-  "description": "Frontend learning application.",
+  "version": "1.0.3-gym.redwood",
+  "description": "Gymnasium custom frontend learning application.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/openedx/frontend-app-learning.git"
