@@ -1,13 +1,16 @@
 import React, { useMemo } from 'react';
 
-import { useAlert } from '../../../../generic/user-messages';
-import { useModel } from '../../../../generic/model-store';
+import { getConfig } from '@edx/frontend-platform';
+import { logInfo } from '@edx/frontend-platform/logging';
+import { useAlert } from '@src/generic/user-messages';
+import { useModel } from '@src/generic/model-store';
 
 import { CERT_STATUS_TYPE } from './CertificateStatusAlert';
 
 const CertificateStatusAlert = React.lazy(() => import('./CertificateStatusAlert'));
 
 function verifyCertStatusType(status) {
+  logInfo(`CERT_STATUS_TYPE: `, CERT_STATUS_TYPE);
   switch (status) {
     case CERT_STATUS_TYPE.DOWNLOADABLE:
     case CERT_STATUS_TYPE.EARNED_NOT_AVAILABLE:

@@ -98,13 +98,14 @@ const ContentIFrame = ({
           // wait for a second to get the latest data
           setTimeout(async () => {
             const progressData = await getProgressTabData(courseId);
+            logInfo(`progressData: `, progressData);
             setIsPassing(progressData.courseGrade.isPassing);
           }, 1000);
         }
       }
     };
 
-    logInfo(`messages: `, examSuccess(), examFailedAttempt(), examFailure());
+    logInfo(`exam messages: `, examSuccess(), examFailedAttempt(), examFailure());
 
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
@@ -128,6 +129,12 @@ const ContentIFrame = ({
 
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
+          {
+            logInfo(
+              `certificateData.certWebViewUrl: `, certificateData?.certWebViewUrl,
+              `isPassing: `, isPassing
+            )
+          }
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
           {
             title?.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (

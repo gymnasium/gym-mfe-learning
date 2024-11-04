@@ -12,6 +12,7 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { getConfig } from '@edx/frontend-platform';
+import { logInfo } from '@edx/frontend-platform/logging';
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import certMessages from './messages';
@@ -50,6 +51,8 @@ const CertificateStatusAlert = ({ intl, payload }) => {
       is_staff: administrator,
     });
   };
+
+  logInfo(`certStatus: `, certStatus);
 
   const renderCertAwardedStatus = () => {
     const alertProps = {
@@ -163,6 +166,7 @@ const CertificateStatusAlert = ({ intl, payload }) => {
         buttonLink,
         buttonMessage,
       }) => (
+        logInfo(`certURL: `, certURL),
         certURL && (
           <Alert variant={variant}>
             <div className="d-flex flex-column flex-lg-row justify-content-between align-items-center">
