@@ -137,7 +137,7 @@ const ContentIFrame = ({
           }
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
           {
-            title?.toLowerCase() === 'final exam' && (certificateData?.certWebViewUrl || isPassing) && (
+            title?.toLowerCase() === 'final exam' && (certificateData?.downloadUrl || isPassing) && (
               <SanitizeHtmlFragment
                 className="final-exam-wrapper"
                 html={examSuccess()}
