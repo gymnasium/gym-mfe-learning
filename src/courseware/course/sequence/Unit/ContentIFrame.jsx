@@ -152,7 +152,7 @@ const ContentIFrame = ({
                 className="final-exam-wrapper"
                 html={examFailure()}
               />
-            ) || title?.toLowerCase() === 'final exam' && ( attemptsUsed === 1 && !isPassing) && (
+            ) || title?.toLowerCase() === 'final exam' && ( attemptsUsed == 1 && !isPassing) && (
               <SanitizeHtmlFragment
                 className="final-exam-wrapper"
                 html={examFailedAttempt()}
