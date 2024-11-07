@@ -74,6 +74,8 @@ const ContentIFrame = ({
     onLoad: handleIFrameLoad,
   };
   const [isPassing, setIsPassing] = useState(false);
+  const [attemptsUsed, setAttemptsUsed] = useState(0);
+  const [shouldEnableSubmitButton, setShouldEnableSubmitButton] = useState(true);
 
   let modalContent;
   if (modalOptions.isOpen) {
@@ -95,6 +97,8 @@ const ContentIFrame = ({
       // Check if this is our submission message
       if (event.data?.type === 'problem_check' && event.data?.action === 'submit') {
         if (courseId) {
+          setAttemptsUsed(event.data.attempts_used + 1);
+          setShouldEnableSubmitButton(event.data.should_enable_submit_button);
           // wait for a second to get the latest data
           setTimeout(async () => {
             const progressData = await getProgressTabData(courseId);
@@ -136,11 +140,22 @@ const ContentIFrame = ({
             )
           }
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
-          {
+
+          { 
             title?.toLowerCase() === 'final exam' && (certificateData?.downloadUrl || isPassing) && (
               <SanitizeHtmlFragment
                 className="final-exam-wrapper"
                 html={examSuccess()}
+              />
+            ) || title?.toLowerCase() === 'final exam' && (attemptsUsed >= 2 && !isPassing) && (
+              <SanitizeHtmlFragment
+                className="final-exam-wrapper"
+                html={examFailure()}
+              />
+            ) || title?.toLowerCase() === 'final exam' && ( attemptsUsed === 1 && !isPassing) && (
+              <SanitizeHtmlFragment
+                className="final-exam-wrapper"
+                html={examFailedAttempt()}
               />
             )
           }
