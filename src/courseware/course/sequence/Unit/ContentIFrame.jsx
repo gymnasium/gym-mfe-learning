@@ -11,7 +11,6 @@ import * as hooks from './hooks';
 import { getProgressTabData } from '@src/course-home/data/api';
 import SanitizeHtmlFragment from '@src/course-home/outline-tab/SanitizeHtmlFragment';
 
-import { logInfo } from '@edx/frontend-platform/logging';
 
 /**
  * Feature policy for iframe, allowing access to certain courseware-related media.
@@ -97,13 +96,12 @@ const ContentIFrame = ({
       // Check if this is our submission message
       if (event.data?.type === 'problem_check' && event.data?.action === 'submit') {
         if (courseId) {
-          setAttemptsUsed(event.data.attempts_used + 1);
-          setShouldEnableSubmitButton(event.data.should_enable_submit_button);
           // wait for a second to get the latest data
           setTimeout(async () => {
             const progressData = await getProgressTabData(courseId);
-            logInfo(`progressData: `, progressData);
             setIsPassing(progressData.courseGrade.isPassing);
+            setAttemptsUsed(event.data.attempts_used + 1);
+            setShouldEnableSubmitButton(event.data.should_enable_submit_button);
           }, 1000);
         }
       }
@@ -132,24 +130,23 @@ const ContentIFrame = ({
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
-
-          { 
-            title?.toLowerCase() === 'final exam' && (certificateData?.downloadUrl || isPassing) && (
-              <SanitizeHtmlFragment
-                className="final-exam-wrapper"
-                html={examSuccess()}
-              />
-            ) || title?.toLowerCase() === 'final exam' && (attemptsUsed >= 2 && !isPassing) && (
-              <SanitizeHtmlFragment
-                className="final-exam-wrapper"
-                html={examFailure()}
-              />
-            ) || title?.toLowerCase() === 'final exam' && ( attemptsUsed == 1 && !isPassing) && (
-              <SanitizeHtmlFragment
-                className="final-exam-wrapper"
-                html={examFailedAttempt()}
-              />
-            )
+          {
+            title?.toLowerCase() === 'final exam' && (() => {
+              let examNotificationMessage;
+              if (certificateData?.downloadUrl || isPassing) {
+                examNotificationMessage = examSuccess();
+              } else if (!isPassing && attemptsUsed >= 2) {
+                examNotificationMessage = examFailure();
+              } else if (!isPassing && attemptsUsed == 1) {
+                examNotificationMessage = examFailedAttempt();
+              }
+              return examNotificationMessage && (
+                <SanitizeHtmlFragment
+                  className="final-exam-wrapper"
+                  html={examNotificationMessage}
+                />
+              );
+            })()
           }
         </div>
       )}
