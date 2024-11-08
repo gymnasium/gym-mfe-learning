@@ -109,8 +109,6 @@ const ContentIFrame = ({
       }
     };
 
-    logInfo(`exam messages: `, examSuccess(), examFailedAttempt(), examFailure());
-
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
   }, []);
@@ -133,12 +131,6 @@ const ContentIFrame = ({
 
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
-          {
-            logInfo(
-              `certificateData.certWebViewUrl: `, certificateData?.certWebViewUrl,
-              `isPassing: `, isPassing
-            )
-          }
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
 
           { 
