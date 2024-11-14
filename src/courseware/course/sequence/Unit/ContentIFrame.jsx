@@ -102,7 +102,7 @@ const ContentIFrame = ({
             setIsPassing(progressData.courseGrade.isPassing);
             setAttemptsUsed(Number(event.data.attempts_used) + 1);
             setShouldEnableSubmitButton(event.data.should_enable_submit_button);
-          }, 1000);
+          }, 4000);
         }
       }
     };
