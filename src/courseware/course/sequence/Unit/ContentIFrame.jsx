@@ -123,7 +123,7 @@ const ContentIFrame = ({
                   return;
                 }
 
-                setTimeout(pollUntilChanged, 10);
+                pollUntilChanged();
               } catch (error) {
                 console.error('Error polling progress:', error);
                 setIsChecking(false);
