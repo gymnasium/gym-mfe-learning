@@ -129,6 +129,10 @@ const ContentIFrame = ({
 
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
+          <p>certificateData: {JSON.stringify(certificateData)}
+            isPassing: {JSON.stringify(isPassing)}
+            attemptsUsed: {JSON.stringify(attemptsUsed)}
+          </p>
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
           {
             title?.toLowerCase() === 'final exam' && (() => {
