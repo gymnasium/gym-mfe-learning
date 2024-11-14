@@ -100,7 +100,7 @@ const ContentIFrame = ({
           setTimeout(async () => {
             const progressData = await getProgressTabData(courseId);
             setIsPassing(progressData.courseGrade.isPassing);
-            setAttemptsUsed(event.data.attempts_used + 1);
+            setAttemptsUsed(Number(event.data.attempts_used) + 1);
             setShouldEnableSubmitButton(event.data.should_enable_submit_button);
           }, 1000);
         }
@@ -129,11 +129,10 @@ const ContentIFrame = ({
 
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
-          <p>certificateData: {JSON.stringify(certificateData)}
-            isPassing: {JSON.stringify(isPassing)}
-            attemptsUsed: {JSON.stringify(attemptsUsed)}
-          </p>
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
+          <p>certificateData: {JSON.stringify(certificateData)}</p>
+          <p>isPassing: {JSON.stringify(isPassing)}</p>
+          <p>attemptsUsed: {JSON.stringify(attemptsUsed)}</p>
           {
             title?.toLowerCase() === 'final exam' && (() => {
               let examNotificationMessage;
