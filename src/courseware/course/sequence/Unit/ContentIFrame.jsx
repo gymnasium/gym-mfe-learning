@@ -75,6 +75,7 @@ const ContentIFrame = ({
   const [isPassing, setIsPassing] = useState(false);
   const [attemptsUsed, setAttemptsUsed] = useState(0);
   const [shouldEnableSubmitButton, setShouldEnableSubmitButton] = useState(true);
+  const [isChecking, setIsChecking] = useState(false);
 
   let modalContent;
   if (modalOptions.isOpen) {
@@ -95,21 +96,52 @@ const ContentIFrame = ({
     const handleMessage = async (event) => {
       // Check if this is our submission message
       if (event.data?.type === 'problem_check' && event.data?.action === 'submit') {
+        console.log(JSON.stringify(event.data));
         if (courseId) {
-          // wait for a second to get the latest data
-          setTimeout(async () => {
-            const progressData = await getProgressTabData(courseId);
-            setIsPassing(progressData.courseGrade.isPassing);
+          try {
+            setIsChecking(true);
+            // Immediately update attempts
             setAttemptsUsed(Number(event.data.attempts_used) + 1);
             setShouldEnableSubmitButton(event.data.should_enable_submit_button);
-          }, 4000);
+
+            // Get initial state to compare against
+            const initialData = await getProgressTabData(courseId);
+            const initialIsPassing = initialData.courseGrade.isPassing;
+
+            let attempts = 0;
+            const MAX_ATTEMPTS = 3;
+            
+            const pollUntilChanged = async () => {
+              try {
+                attempts += 1;
+                const progressData = await getProgressTabData(courseId);
+                const currentIsPassing = progressData.courseGrade.isPassing;
+
+                if (currentIsPassing !== initialIsPassing || attempts >= MAX_ATTEMPTS) {
+                  setIsPassing(currentIsPassing);
+                  setIsChecking(false);
+                  return;
+                }
+
+                setTimeout(pollUntilChanged, 10);
+              } catch (error) {
+                console.error('Error polling progress:', error);
+                setIsChecking(false);
+              }
+            };
+
+            pollUntilChanged();
+          } catch (error) {
+            console.error('Error handling submission:', error);
+            setIsChecking(false);
+          }
         }
       }
     };
 
     window.addEventListener('message', handleMessage);
     return () => window.removeEventListener('message', handleMessage);
-  }, []);
+  }, [courseId]);
 
   return (
     <>
@@ -130,11 +162,14 @@ const ContentIFrame = ({
       {shouldShowContent && (
         <div className="unit-iframe-wrapper">
           <iframe title={title} {...contentIFrameProps} data-testid={testIDs.contentIFrame} />
-          <p>certificateData: {JSON.stringify(certificateData)}</p>
-          <p>isPassing: {JSON.stringify(isPassing)}</p>
-          <p>attemptsUsed: {JSON.stringify(attemptsUsed)}</p>
           {
             title?.toLowerCase() === 'final exam' && (() => {
+              if (isChecking) {
+                return (
+                  <></>
+                );
+              }
+
               let examNotificationMessage;
               if (certificateData?.downloadUrl || isPassing) {
                 examNotificationMessage = examSuccess();
