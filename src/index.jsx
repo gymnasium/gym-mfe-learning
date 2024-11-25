@@ -3,7 +3,7 @@ import {
   mergeConfig,
   getConfig,
 } from '@edx/frontend-platform';
-import { AppProvider, ErrorPage, PageWrap } from '@edx/frontend-platform/react';
+import { AppProvider, PageWrap } from '@edx/frontend-platform/react';
 import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -38,7 +38,7 @@ import DecodePageRoute from './decode-page-route';
 import { DECODE_ROUTES, ROUTES } from './constants';
 import PreferencesUnsubscribe from './preferences-unsubscribe';
 
-import { GymFooter as FooterSlot } from '@openedx/gym-frontend';
+import { ErrorPage, GymFooter as FooterSlot } from '@openedx/gym-frontend';
 
 import {Intercom, boot, update } from "@intercom/messenger-js-sdk";
 
