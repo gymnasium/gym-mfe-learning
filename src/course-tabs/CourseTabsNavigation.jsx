@@ -22,7 +22,10 @@ const CourseTabsNavigation = ({
               className="nav-underline-tabs"
               aria-label={intl.formatMessage(messages.courseMaterial)}
             >
-              {tabs.map(({ url, title, slug }) => (
+              {tabs.map(({ url, title, slug }) => {
+                // Change tab titles
+                title = title.replace('Course', 'Lessons').replace('Discussion', 'Forum')
+                return (
                 <a
                   key={slug}
                   className={classNames('nav-item flex-shrink-0 nav-link', { active: slug === activeTabSlug })}
@@ -30,7 +33,7 @@ const CourseTabsNavigation = ({
                 >
                   {title}
                 </a>
-              ))}
+              )})}
             </Tabs>
           </div>
           <div className="search-toggle">
