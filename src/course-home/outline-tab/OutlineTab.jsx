@@ -132,6 +132,16 @@ const OutlineTab = ({ intl }) => {
 
   let sectionOpen;
 
+  function openIndex(ident, index) {
+    const sectionCount = courses[ident].sectionIds.length;
+    if (sectionCount <= 2) {
+      sectionOpen = index <= sectionCount - 1 ? true : false;
+    } else {
+      sectionOpen = index === 0 ? true : false;
+    }
+    return sectionOpen;
+  }
+
   return (
     <>
       <div data-learner-type={learnerType} className="row w-100 mx-0 my-3 justify-content-between">
@@ -180,8 +190,10 @@ const OutlineTab = ({ intl }) => {
               </div> */}
               <ol id="courseHome-outline" className="list-unstyled">
                 {courses[rootCourseId].sectionIds.map((sectionId, index) => (
-                  // there's probably a more elegant way of doing this, but this forces the first section open for first time visitors who haven't started the course.
-                  !hasVisitedCourse ? (sectionOpen = index === 0 ? true : false) : (sectionOpen = sections[sectionId].resumeBlock),
+                  // there's probably a more elegant way of doing this... for first time visitors who haven't started the course, forces the first section open for full courses, and all sections open for short courses with only two or less sections.
+                  !hasVisitedCourse
+                    ? openIndex(rootCourseId, index)
+                    : (sectionOpen = sections[sectionId].resumeBlock),
                   <Section
                     key={sectionId}
                     courseId={courseId}
