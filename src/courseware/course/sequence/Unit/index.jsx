@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { AppContext } from '@edx/frontend-platform/react';
 import { useIntl } from '@edx/frontend-platform/i18n';
@@ -44,6 +45,9 @@ const Unit = ({
 
   return (
     <div className="unit">
+      <Helmet>
+        <link rel="preload" fetchpriority="high" href={iframeUrl} as="document" />
+      </Helmet>
       <div className="mb-0">
         <h3 className="h3">{unit.title}</h3>
         <UnitTitleSlot courseId={courseId} unitId={id} unitTitle={unit.title} />
