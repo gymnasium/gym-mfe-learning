@@ -8,6 +8,8 @@
 
     <link rel="shortcut icon" href="<%= process.env.FAVICON_URL %>" type="image/x-icon" />
 
+    <link rel="dns-prefetch" href="<%= process.env.LMS_BASE_URL %>" />
+
     <% if (process.env.MARKETING_SITE_BASE_URL) { %>
       <link rel="dns-prefetch" href="<%= process.env.MARKETING_SITE_BASE_URL %>" />
       <link rel="preload" fetchpriority="high" href="<%= process.env.MARKETING_SITE_BASE_URL %>/css/mfe-learning.css" as="style" />
