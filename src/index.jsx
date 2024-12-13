@@ -1,167 +1,21 @@
 import {
-  APP_INIT_ERROR, APP_READY, subscribe, initialize,
+  APP_INIT_ERROR,
+  APP_READY,
+  subscribe,
+  initialize,
   mergeConfig,
-  getConfig,
 } from '@edx/frontend-platform';
-import { AppProvider, PageWrap } from '@edx/frontend-platform/react';
-import { getAuthenticatedUser } from '@edx/frontend-platform/auth';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Routes, Route } from 'react-router-dom';
-
-import { Helmet } from 'react-helmet';
-import { fetchDiscussionTab, fetchLiveTab } from './course-home/data/thunks';
-import DiscussionTab from './course-home/discussion-tab/DiscussionTab';
 
 import messages from './i18n';
-import { UserMessagesProvider } from './generic/user-messages';
 
-import './GymApp.scss';
-
-import OutlineTab from './course-home/outline-tab';
-import { CourseExit } from './courseware/course/course-exit';
-import CoursewareContainer from './courseware';
-import CoursewareRedirectLandingPage from './courseware/CoursewareRedirectLandingPage';
-import DatesTab from './course-home/dates-tab';
-import GoalUnsubscribe from './course-home/goal-unsubscribe';
-import ProgressTab from './course-home/progress-tab/GymProgressTab';
-import { TabContainer } from './tab-page';
-
-import { fetchDatesTab, fetchOutlineTab, fetchProgressTab } from './course-home/data';
-import { fetchCourse } from './courseware/data';
-import initializeStore from './store';
-import NoticesProvider from './generic/notices';
-import PathFixesProvider from './generic/path-fixes';
-import LiveTab from './course-home/live-tab/LiveTab';
-import CourseAccessErrorPage from './generic/GymCourseAccessErrorPage';
-import DecodePageRoute from './decode-page-route';
-import { DECODE_ROUTES, ROUTES } from './constants';
-import PreferencesUnsubscribe from './preferences-unsubscribe';
-
-import { ErrorPage, GymFooter as FooterSlot } from '@openedx/gym-frontend';
-
-import {Intercom, boot, update } from "@intercom/messenger-js-sdk";
-
-const INTERCOM_APP_ID = () => getConfig().INTERCOM_APP_ID;
+import { ErrorPage } from '@openedx/gym-frontend';
+import { Learning as App } from '@openedx/gym-frontend/overrides/learning';
 
 subscribe(APP_READY, () => {
-
-  if (INTERCOM_APP_ID()) {
-    try {
-      Intercom({app_id: INTERCOM_APP_ID()});
-
-      const INTERCOM_SETTINGS = {
-        email: getAuthenticatedUser().email,
-        user_id: getAuthenticatedUser().username,
-      }
-    
-      update(INTERCOM_SETTINGS);
-    } catch (error) {
-      logError(error);
-    }
-  }
-
   ReactDOM.render(
-    <AppProvider store={initializeStore()}>
-      <Helmet>
-        <link rel="shortcut icon" href={getConfig().FAVICON_URL} type="image/x-icon" />
-      </Helmet>
-      <PathFixesProvider>
-        <NoticesProvider>
-          <UserMessagesProvider>
-            <Routes>
-              <Route path={ROUTES.UNSUBSCRIBE} element={<PageWrap><GoalUnsubscribe /></PageWrap>} />
-              <Route path={ROUTES.REDIRECT} element={<PageWrap><CoursewareRedirectLandingPage /></PageWrap>} />
-              <Route path={ROUTES.PREFERENCES_UNSUBSCRIBE} element={<PageWrap><PreferencesUnsubscribe /></PageWrap>} />
-              <Route
-                path={DECODE_ROUTES.ACCESS_DENIED}
-                element={<DecodePageRoute><CourseAccessErrorPage /></DecodePageRoute>}
-              />
-              <Route
-                path={DECODE_ROUTES.HOME}
-                element={(
-                  <DecodePageRoute>
-                    <TabContainer tab="outline" fetch={fetchOutlineTab} slice="courseHome">
-                      <OutlineTab />
-                    </TabContainer>
-                  </DecodePageRoute>
-              )}
-              />
-              <Route
-                path={DECODE_ROUTES.LIVE}
-                element={(
-                  <DecodePageRoute>
-                    <TabContainer tab="lti_live" fetch={fetchLiveTab} slice="courseHome">
-                      <LiveTab />
-                    </TabContainer>
-                  </DecodePageRoute>
-                )}
-              />
-              <Route
-                path={DECODE_ROUTES.DATES}
-                element={(
-                  <DecodePageRoute>
-                    <TabContainer tab="dates" fetch={fetchDatesTab} slice="courseHome">
-                      <DatesTab />
-                    </TabContainer>
-                  </DecodePageRoute>
-                )}
-              />
-              <Route
-                path={DECODE_ROUTES.DISCUSSION}
-                element={(
-                  <DecodePageRoute>
-                    <TabContainer tab="discussion" fetch={fetchDiscussionTab} slice="courseHome">
-                      <DiscussionTab />
-                    </TabContainer>
-                  </DecodePageRoute>
-                )}
-              />
-              {DECODE_ROUTES.PROGRESS.map((route) => (
-                <Route
-                  key={route}
-                  path={route}
-                  element={(
-                    <DecodePageRoute>
-                      <TabContainer
-                        tab="progress"
-                        fetch={fetchProgressTab}
-                        slice="courseHome"
-                        isProgressTab
-                      >
-                        <ProgressTab />
-                      </TabContainer>
-                    </DecodePageRoute>
-                  )}
-                />
-              ))}
-              <Route
-                path={DECODE_ROUTES.COURSE_END}
-                element={(
-                  <DecodePageRoute>
-                    <TabContainer tab="courseware" fetch={fetchCourse} slice="courseware">
-                      <CourseExit />
-                    </TabContainer>
-                  </DecodePageRoute>
-                )}
-              />
-              {DECODE_ROUTES.COURSEWARE.map((route) => (
-                <Route
-                  key={route}
-                  path={route}
-                  element={(
-                    <DecodePageRoute>
-                      <CoursewareContainer />
-                    </DecodePageRoute>
-                  )}
-                />
-              ))}
-            </Routes>
-          </UserMessagesProvider>
-        </NoticesProvider>
-      </PathFixesProvider>
-      <FooterSlot />
-    </AppProvider>,
+    <App />,
     document.getElementById('root'),
   );
 });

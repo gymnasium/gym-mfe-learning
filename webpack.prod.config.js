@@ -18,6 +18,7 @@ config.plugins.push(
 config.resolve.alias = {
   ...config.resolve.alias,
   '@src': path.resolve(__dirname, 'src'),
+  './ErrorBoundary': path.resolve(__dirname, 'node_modules/@openedx/gym-frontend/overrides/ErrorBoundary'),
 };
 
 module.exports = config;
