@@ -4,8 +4,8 @@ import React, {
 } from 'react';
 import { AppContext } from '@edx/frontend-platform/react';
 
-import { useAlert } from '../../generic/user-messages';
-import { useModel } from '../../generic/model-store';
+import { useAlert } from '@src/generic/user-messages';
+import { useModel } from '@src/generic/model-store';
 
 const EnrollmentAlert = React.lazy(() => import('./EnrollmentAlert'));
 
