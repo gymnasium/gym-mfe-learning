@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow, noimageindex, noarchive, nosnippet, noai, noimageai, nocache" />
 
-    <link rel="shortcut icon" href="<%= process.env.FAVICON_URL %>" type="image/x-icon" />
-
     <link rel="dns-prefetch" href="<%= process.env.LMS_BASE_URL %>" />
 
     <% if (process.env.MARKETING_SITE_BASE_URL) { %>
       <link rel="dns-prefetch" href="<%= process.env.MARKETING_SITE_BASE_URL %>" />
+      <link rel="icon" href="<%= process.env.MARKETING_SITE_BASE_URL %>/favicon.ico" sizes="any" />
+      <link rel="icon" href="<%= process.env.MARKETING_SITE_BASE_URL %>/favicon.svg" type="image/svg+xml" />
+      <link rel="apple-touch-icon" href="<%= process.env.MARKETING_SITE_BASE_URL %>/favicon-180.png" />
+      <link rel="manifest" href="<%= process.env.MARKETING_SITE_BASE_URL %>/manifest.json" />
       <link rel="preload" fetchpriority="high" href="<%= process.env.MARKETING_SITE_BASE_URL %>/css/mfe-learning.css" as="style" />
       <link rel="stylesheet" href="<%= process.env.MARKETING_SITE_BASE_URL %>/css/mfe-learning.css" />
     <% } %>
